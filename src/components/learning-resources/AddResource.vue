@@ -1,27 +1,43 @@
 <template>
   <base-card
-    ><form class="form-control">
-      <div>
+    ><form @submit.prevent="submitData">
+      <div class="form-control">
         <label for="title">Title</label
-        ><input id="title" name="title" type="text" />
+        ><input id="title" name="title" type="text" ref="titleInput" />
       </div>
-    </form>
-    <form class="form-control">
-      <div>
+      <div class="form-control">
         <label for="description">Description</label
-        ><textarea id="description" name="description" rows="3" />
+        ><textarea
+          id="description"
+          name="description"
+          rows="3"
+          ref="descInput"
+        />
       </div>
-    </form>
-    <form class="form-control">
+      <div class="form-control">
+        <label for="link">Link</label
+        ><input id="link" name="link" type="url" ref="linkInput" />
+      </div>
       <div>
-        <label for="link">Link</label><input id="link" name="link" type="url" />
+        <base-button type="submit">Add Resource</base-button>
       </div>
     </form>
-    <div>
-      <base-button type="submit">Add Resource</base-button>
-    </div>
   </base-card>
 </template>
+
+<script>
+export default {
+  inject: ['addResource'],
+  methods: {
+    submitData() {
+      const enteredTitle = this.$refs.titleInput.value;
+      const enteredDescription = this.$refs.descInput.value;
+      const enteredUrl = this.$refs.linkInput.value;
+      this.addResource(enteredTitle, enteredDescription, enteredUrl);
+    }
+  }
+};
+</script>
 
 <style scoped>
 label {
